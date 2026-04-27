@@ -1,0 +1,513 @@
+:root {
+    --bg: #0d0d0d;
+    --surface: #1a1a1a;
+    --border: #2a2a2a;
+    --text: #d4d4d4;
+    --muted: #6b7280;
+    --accent: #4ade80;
+    --accent-dim: #22c55e;
+    --danger: #f87171;
+    --font: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+    --max-w: 860px;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* ─── Navigation ─── */
+
+.site-nav {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.site-nav .container {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.nav-links {
+    display: flex;
+    gap: 0;
+    flex: 1;
+}
+
+.nav-links a,
+.nav-contact a {
+    color: var(--text);
+    font-size: 0.875rem;
+    padding: 0 0.75rem;
+    border-right: 1px solid var(--border);
+}
+
+.nav-links a:first-child {
+    padding-left: 0;
+}
+
+.nav-links a:hover,
+.nav-contact a:hover {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.nav-contact {
+    margin-left: auto;
+}
+
+.nav-contact a {
+    border-right: none;
+    padding-right: 0;
+}
+
+/* ─── Sections ─── */
+
+.section {
+    padding: 4rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.section:last-child {
+    border-bottom: none;
+}
+
+.section-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-bottom: 2rem;
+}
+
+/* ─── Hero ─── */
+
+.hero {
+    padding: 4rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.hero-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+}
+
+.hero-title::before {
+    content: '> ';
+    color: var(--accent);
+}
+
+.hero-bio {
+    color: var(--text);
+    max-width: 640px;
+    margin-bottom: 2rem;
+    line-height: 1.8;
+}
+
+.social-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    font-size: 0.875rem;
+}
+
+.social-links a {
+    color: var(--accent);
+    padding: 0 0.6rem;
+    border-right: 1px solid var(--border);
+}
+
+.social-links a:first-child {
+    padding-left: 0;
+}
+
+.social-links a:last-child {
+    border-right: none;
+}
+
+/* ─── Terminal box ─── */
+
+.terminal-box {
+    border: 1px solid var(--border);
+    padding: 1.25rem 1.5rem;
+    background: var(--surface);
+}
+
+/* ─── Portfolio grid ─── */
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 1px;
+    border: 1px solid var(--border);
+}
+
+.portfolio-item {
+    padding: 1.25rem 1.5rem;
+    background: var(--surface);
+    border: none;
+}
+
+.portfolio-item + .portfolio-item {
+    border-top: 1px solid var(--border);
+}
+
+.portfolio-name {
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+}
+
+.portfolio-desc {
+    color: var(--muted);
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+}
+
+.portfolio-stack {
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+.portfolio-stack span {
+    display: inline-block;
+    border: 1px solid var(--border);
+    padding: 0.1rem 0.4rem;
+    margin-right: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+
+/* ─── Cases grid ─── */
+
+.cases-grid {
+    display: grid;
+    gap: 1px;
+    border: 1px solid var(--border);
+}
+
+.case-card {
+    padding: 1.25rem 1.5rem;
+    background: var(--surface);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.case-card:hover {
+    background: #202020;
+}
+
+.case-title {
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+}
+
+.case-summary {
+    color: var(--muted);
+    font-size: 0.875rem;
+}
+
+.case-meta {
+    text-align: right;
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+.case-year {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.case-link {
+    color: var(--accent);
+    font-size: 0.875rem;
+    white-space: nowrap;
+}
+
+/* ─── Prices ─── */
+
+.prices-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1px;
+    border: 1px solid var(--border);
+}
+
+.price-card {
+    padding: 1.5rem;
+    background: var(--surface);
+}
+
+.price-name {
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.price-amount {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+}
+
+.price-unit {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+}
+
+.price-features {
+    list-style: none;
+    font-size: 0.875rem;
+    color: var(--muted);
+}
+
+.price-features li::before {
+    content: '— ';
+    color: var(--border);
+}
+
+/* ─── Contacts ─── */
+
+.contacts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.contact-item {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+}
+
+.contact-label {
+    color: var(--muted);
+    min-width: 80px;
+}
+
+/* ─── Case page ─── */
+
+.case-header {
+    margin-bottom: 3rem;
+}
+
+.case-page-title {
+    font-size: 1.4rem;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+}
+
+.case-page-title::before {
+    content: '> ';
+}
+
+.case-stack-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+}
+
+.case-stack-tag {
+    font-size: 0.75rem;
+    border: 1px solid var(--border);
+    padding: 0.15rem 0.5rem;
+    color: var(--muted);
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+}
+
+.back-link:hover {
+    color: var(--accent);
+}
+
+/* ─── Article (MD content) ─── */
+
+.article {
+    max-width: 680px;
+}
+
+.article h2 {
+    font-size: 1rem;
+    color: var(--accent);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.article h2::before {
+    content: '## ';
+    color: var(--border);
+}
+
+.article h3 {
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.article p {
+    color: var(--text);
+    margin-bottom: 1rem;
+    line-height: 1.8;
+}
+
+.article ul,
+.article ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+.article li {
+    margin-bottom: 0.25rem;
+}
+
+.article code {
+    font-family: var(--font);
+    font-size: 0.875em;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0.1em 0.4em;
+    color: var(--accent);
+}
+
+.article pre {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.25rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+.article pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--text);
+}
+
+.article blockquote {
+    border-left: 2px solid var(--accent);
+    padding-left: 1rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+}
+
+/* ─── Case page utilities ─── */
+
+.case-page-container {
+    padding-top: 3rem;
+    padding-bottom: 4rem;
+}
+
+.case-meta-box {
+    display: inline-block;
+    margin-top: 0.5rem;
+}
+
+.case-page-year {
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin-right: 1rem;
+}
+
+.case-stack-inline {
+    display: inline-flex;
+}
+
+/* ─── Section utilities ─── */
+
+.section-note {
+    margin-top: 1.5rem;
+    color: var(--muted);
+    font-size: 0.875rem;
+}
+
+/* ─── Footer ─── */
+
+.site-footer {
+    padding: 2rem 0;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-align: center;
+}
+
+/* ─── Responsive ─── */
+
+@media (max-width: 640px) {
+    body {
+        font-size: 14px;
+    }
+
+    .nav-links a {
+        padding: 0 0.5rem;
+    }
+
+    .hero-title {
+        font-size: 1.3rem;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .prices-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .case-card {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .case-meta {
+        text-align: left;
+    }
+}
