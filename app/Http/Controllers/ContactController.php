@@ -32,7 +32,14 @@ class ContactController extends Controller
                   . "<b>Контакт:</b> " . e($data['contact']) . "\n\n"
                   . e($data['message']);
 
-            $response = Http::timeout(5)->post("https://api.telegram.org/bot{$token}/sendMessage", [
+            $proxy = config('services.telegram.proxy');
+            $http = Http::timeout(5);
+
+            if ($proxy) {
+                $http = $http->withOptions(['proxy' => $proxy]);
+            }
+
+            $response = $http->post("https://api.telegram.org/bot{$token}/sendMessage", [
                 'chat_id'    => $chatId,
                 'text'       => $text,
                 'parse_mode' => 'HTML',
