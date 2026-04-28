@@ -7,7 +7,7 @@
     <section id="hero" class="hero">
         <div class="hero-inner">
             <div class="hero-text">
-                <h1 class="hero-title">timcode.ru</h1>
+                <h1 class="hero-title" data-typewriter="timcode.ru">timcode.ru</h1>
                 <p class="hero-bio">
                     Привет, меня зовут Тимур.<br>
                     Пишу серверный код с 2014-го — сам, без курсов, по документации и чужим ошибкам.
@@ -17,7 +17,7 @@
                 <div class="social-links">
                     <a href="https://t.me/borodatimur" target="_blank" rel="noopener">Telegram</a>
                     <a href="https://github.com/TimurTurdyev" target="_blank" rel="noopener">GitHub</a>
-                    <a href="mailto:d2e8ec@gmail.com">Email</a>
+                    <a href="mailto:borodatimur@gmail.com">Email</a>
                 </div>
             </div>
             <div class="hero-avatar-wrap">
@@ -32,7 +32,13 @@
                 <div><span class="co-key">role</span>      Backend / Full-stack разработчик</div>
                 <div><span class="co-key">location</span>  Москва, Россия</div>
                 <div><span class="co-key">since</span>     2014</div>
-                <div><span class="co-key">stack</span>     Laravel · Go · Vue · PostgreSQL · Docker</div>
+                <div><span class="co-key">languages</span> PHP (8+) · JavaScript / TypeScript · Go · Python · Java · Bash</div>
+                <div><span class="co-key">backend</span>   Laravel · Yii2 · Laminas · OpenCart · Go · FastAPI · aiohttp</div>
+                <div><span class="co-key">frontend</span>  Vue · Alpine.js · Tailwind · Bootstrap · Blade · jQuery · Vite · Wails</div>
+                <div><span class="co-key">db</span>        MySQL · PostgreSQL · MongoDB · Redis · SphinxSearch · Meilisearch</div>
+                <div><span class="co-key">queues</span>    RabbitMQ · AMQP</div>
+                <div><span class="co-key">infra</span>     Docker · Linux · Nginx · Git · systemd</div>
+                <div><span class="co-key">integr</span>    Mango Office · Megaplan · Dadata · СДЭК · ВКонтакте API</div>
                 <div><span class="co-key">contact</span>   <a href="https://t.me/borodatimur" target="_blank" rel="noopener">t.me/borodatimur</a></div>
             </div>
             <div class="curl-legend">
@@ -45,7 +51,7 @@
 
     {{-- About --}}
     <section id="about" class="section">
-        <p class="section-title">## обо мне</p>
+        <p class="section-title"><span class="st-hash">##</span> обо мне</p>
         <p>
             В разработке с 2014-го. Профильного образования нет — всё самостоятельно: по документации,
             чужому коду и собственным факапам. Этот путь дольше, чем университет, но он приучил не запоминать
@@ -65,7 +71,7 @@
 
     {{-- Stack --}}
     <section id="stack" class="section">
-        <p class="section-title">## стек</p>
+        <p class="section-title"><span class="st-hash">##</span> стек</p>
         <div class="stack-table-wrap">
             <table class="stack-table">
                 <thead>
@@ -90,7 +96,7 @@
 
     {{-- Portfolio --}}
     <section id="portfolio" class="section">
-        <p class="section-title">## портфолио</p>
+        <p class="section-title"><span class="st-hash">##</span> портфолио</p>
         <div class="portfolio-grid">
             @foreach($portfolio as $project)
             <div class="portfolio-item">
@@ -114,7 +120,7 @@
 
     {{-- Cases --}}
     <section id="cases" class="section">
-        <p class="section-title">## кейсы</p>
+        <p class="section-title"><span class="st-hash">##</span> кейсы</p>
         @if(count($cases) > 0)
         <div class="cases-grid">
             @foreach($cases as $case)
@@ -135,49 +141,36 @@
         @endif
     </section>
 
-    {{-- Prices --}}
-    <section id="prices" class="section">
-        <p class="section-title">## цены</p>
-        <div class="prices-grid">
-            <div class="price-card">
-                <div class="price-name">Консультация</div>
-                <div class="price-amount">от 3 000 ₽</div>
-                <div class="price-unit">за час</div>
-                <ul class="price-features">
-                    <li>аудит архитектуры</li>
-                    <li>code review</li>
-                    <li>разбор задачи</li>
-                </ul>
-            </div>
-            <div class="price-card">
-                <div class="price-name">Проект</div>
-                <div class="price-amount">от 50 000 ₽</div>
-                <div class="price-unit">фиксированная цена</div>
-                <ul class="price-features">
-                    <li>ТЗ + декомпозиция</li>
-                    <li>разработка и тесты</li>
-                    <li>деплой и документация</li>
-                </ul>
-            </div>
-            <div class="price-card">
-                <div class="price-name">Поддержка</div>
-                <div class="price-amount">от 30 000 ₽</div>
-                <div class="price-unit">в месяц</div>
-                <ul class="price-features">
-                    <li>20 часов в месяц</li>
-                    <li>приоритетный ответ</li>
-                    <li>мониторинг и правки</li>
-                </ul>
+    {{-- Work / CTA --}}
+    <section id="work" class="section">
+        <p class="section-title"><span class="st-hash">##</span> сотрудничество</p>
+        <div class="work-text">
+            <p>
+                Берусь за задачи, где нужно разобраться в чужом коде, связать системы
+                или принять инженерное решение. Работаю по рекомендациям и с теми,
+                кто понимает, что именно нужно сделать.
+            </p>
+            <br>
+            <p>
+                Интересно: интеграции между сервисами, сложная бизнес-логика, легаси без документации,
+                высоконагруженные задачи, архитектурные решения. Неинтересно: вёрстка по готовому макету,
+                работа «сделай как у конкурентов», проекты без конкретного ТЗ.
+            </p>
+            <br>
+            <p>Стоимость зависит от задачи — обсуждаем после того, как услышу, что нужно сделать.</p>
+        </div>
+        <div class="work-cta">
+            <div class="cta-prompt">$ ./contact.sh</div>
+            <div class="cta-actions">
+                <a href="/contact" class="btn-cli">[ написать ]</a>
+                <a href="https://t.me/borodatimur" target="_blank" rel="noopener" class="btn-cli">[ Telegram ]</a>
             </div>
         </div>
-        <p class="section-note">
-            Конкретная цена зависит от задачи. Напишите — обсудим.
-        </p>
     </section>
 
     {{-- Contacts --}}
     <section id="contacts" class="section">
-        <p class="section-title">## контакты</p>
+        <p class="section-title"><span class="st-hash">##</span> контакты</p>
         <div class="contacts-list">
             <div class="contact-item">
                 <span class="contact-label">Telegram</span>
@@ -185,7 +178,7 @@
             </div>
             <div class="contact-item">
                 <span class="contact-label">Email</span>
-                <a href="mailto:d2e8ec@gmail.com">d2e8ec@gmail.com</a>
+                <a href="mailto:borodatimur@gmail.com">borodatimur@gmail.com</a>
             </div>
             <div class="contact-item">
                 <span class="contact-label">GitHub</span>

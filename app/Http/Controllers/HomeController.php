@@ -32,7 +32,7 @@ class HomeController extends Controller
             'stack'    => ['Laravel', 'Go', 'Vue', 'PostgreSQL', 'Docker'],
             'contact'  => [
                 'telegram' => 'https://t.me/borodatimur',
-                'email'    => 'd2e8ec@gmail.com',
+                'email'    => 'borodatimur@gmail.com',
                 'github'   => 'https://github.com/TimurTurdyev',
             ],
             'endpoints' => [
@@ -96,12 +96,18 @@ class HomeController extends Controller
         $out .= $line('  по документации, чужому коду и собственным ошибкам.');
         $out .= $line('  Сейчас — Waviot (IoT, NB-Fi) и проекты по рекомендации.');
         $out .= $line();
-        $out .= $line($gr . '  name      ' . $w . 'Тимур Турдыев');
-        $out .= $line($gr . '  role      ' . $w . 'Backend / Full-stack разработчик');
-        $out .= $line($gr . '  location  ' . $w . 'Москва, Россия');
-        $out .= $line($gr . '  since     ' . $w . '2014');
-        $out .= $line($gr . '  stack     ' . $w . 'Laravel · Go · Vue · PostgreSQL · Docker');
-        $out .= $line($gr . '  contact   ' . $g . 't.me/borodatimur' . $w);
+        $out .= $line($gr . '  name       ' . $w . 'Тимур Турдыев');
+        $out .= $line($gr . '  role       ' . $w . 'Backend / Full-stack разработчик');
+        $out .= $line($gr . '  location   ' . $w . 'Москва, Россия');
+        $out .= $line($gr . '  since      ' . $w . '2014');
+        $out .= $line($gr . '  languages  ' . $w . 'PHP (8+) · JavaScript / TypeScript · Go · Python · Java · Bash');
+        $out .= $line($gr . '  backend    ' . $w . 'Laravel · Yii2 · Laminas · OpenCart · Go · FastAPI · aiohttp');
+        $out .= $line($gr . '  frontend   ' . $w . 'Vue · Alpine.js · Tailwind · Bootstrap · Blade · jQuery · Vite · Wails');
+        $out .= $line($gr . '  db         ' . $w . 'MySQL · PostgreSQL · MongoDB · Redis · SphinxSearch · Meilisearch');
+        $out .= $line($gr . '  queues     ' . $w . 'RabbitMQ · AMQP');
+        $out .= $line($gr . '  infra      ' . $w . 'Docker · Linux (debian, systemd) · Nginx · Git · cron/yoyo/fabric');
+        $out .= $line($gr . '  integr     ' . $w . 'Mango Office · Megaplan · Dadata · СДЭК · ВКонтакте API · OpenCart API');
+        $out .= $line($gr . '  contact    ' . $g . 't.me/borodatimur' . $w);
         $out .= $line();
         $out .= $line($boxTop);
         $out .= $boxRows;
@@ -110,7 +116,7 @@ class HomeController extends Controller
         $out .= $line($sep('Контакты'));
         $out .= $line();
         $out .= $line($gr . '  Telegram  ' . $g . 't.me/borodatimur' . $w);
-        $out .= $line($gr . '  Email     ' . $w . 'd2e8ec@gmail.com');
+        $out .= $line($gr . '  Email     ' . $w . 'borodatimur@gmail.com');
         $out .= $line($gr . '  GitHub    ' . $g . 'github.com/TimurTurdyev' . $w);
         $out .= $line();
         $out .= $line($sep('Команды'));
@@ -142,26 +148,50 @@ class HomeController extends Controller
         return [
             [
                 'name'  => 'IoT-платформа для производства',
-                'desc'  => 'Система сбора телеметрии с промышленных датчиков, визуализация и алертинг.',
-                'stack' => ['Laravel', 'MQTT', 'InfluxDB', 'Vue'],
+                'desc'  => 'Сбор телеметрии с промышленных датчиков через MQTT, хранение временных рядов в InfluxDB, Vue-дашборд с алертингом в Telegram.',
+                'stack' => ['Laravel', 'MQTT', 'InfluxDB', 'Vue', 'Docker'],
                 'url'   => '',
             ],
             [
-                'name'  => 'CRM для логистики',
-                'desc'  => 'Управление заявками, маршрутизация, интеграция с картами и 1С.',
-                'stack' => ['Laravel', 'PostgreSQL', 'Vue', 'Docker'],
+                'name'  => 'CRM для логистической компании',
+                'desc'  => 'Замена Excel-таблиц: управление заявками, маршрутизация водителей, интеграция с 2GIS и 1С, WebSocket-уведомления.',
+                'stack' => ['Laravel', 'PostgreSQL', 'Vue 3', 'Redis', 'Docker'],
                 'url'   => '',
             ],
             [
                 'name'  => 'Портал самообслуживания',
-                'desc'  => 'Личный кабинет абонента телеком-оператора: баланс, тарифы, заявки.',
-                'stack' => ['Laravel', 'Vue', 'Redis'],
+                'desc'  => 'Личный кабинет абонента телеком-оператора: баланс, тарифы, история платежей, онлайн-заявки.',
+                'stack' => ['Laravel', 'Vue', 'Redis', 'MySQL'],
                 'url'   => '',
             ],
             [
+                'name'  => 'Laravel-Mango-Office',
+                'desc'  => 'Пакет для интеграции Laravel-приложений с облачной АТС Mango Office: вебхуки, история звонков, клик-ту-колл.',
+                'stack' => ['PHP', 'Laravel'],
+                'url'   => 'https://github.com/TimurTurdyev/Laravel-Mango-Office',
+            ],
+            [
+                'name'  => 'SDK СДЭК 2.0',
+                'desc'  => 'PHP-клиент для API v2.0 службы доставки СДЭК: расчёт тарифов, создание заказов, трекинг, печать накладных.',
+                'stack' => ['PHP'],
+                'url'   => 'https://github.com/TimurTurdyev/sdk2.0',
+            ],
+            [
+                'name'  => 'Export-Import OpenCart + Vue',
+                'desc'  => 'Импорт и экспорт товаров в OpenCart через Vue-интерфейс без перезагрузки страницы — CSV и XLS форматы.',
+                'stack' => ['PHP', 'Vue', 'OpenCart'],
+                'url'   => 'https://github.com/TimurTurdyev/Export-Import-Opencart-Vue',
+            ],
+            [
+                'name'  => 'opencart-dadata',
+                'desc'  => 'Подсказки адресов и ФИО от Dadata при оформлении заказа в OpenCart. Ускоряет ввод и снижает ошибки.',
+                'stack' => ['Vue', 'PHP', 'OpenCart'],
+                'url'   => 'https://github.com/TimurTurdyev/opencart-dadata',
+            ],
+            [
                 'name'  => 'timcode.ru',
-                'desc'  => 'Этот сайт. Laravel + MD-кейсы, терминальный дизайн.',
-                'stack' => ['Laravel', 'PHP 8.4', 'CSS'],
+                'desc'  => 'Этот сайт. Laravel + markdown-кейсы, терминальный дизайн, curl-режим.',
+                'stack' => ['Laravel', 'PHP 8.3', 'CSS'],
                 'url'   => 'https://github.com/TimurTurdyev',
             ],
         ];

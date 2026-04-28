@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Тимур Турдыев — разработчик')</title>
-    <meta name="description" content="@yield('description', 'Разработчик backend и full-stack приложений. Laravel, Vue, PostgreSQL. Кейсы, портфолио, цены.')">
+    <meta name="description" content="@yield('description', 'Разработчик backend и full-stack приложений. Laravel, Go, Vue, PostgreSQL. Кейсы и портфолио.')">
     <meta property="og:title" content="@yield('title', 'Тимур Турдыев — разработчик')">
     <meta property="og:description" content="@yield('description', 'Разработчик backend и full-stack приложений.')">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
     <link rel="canonical" href="{{ url()->current() }}">
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @yield('head')
 </head>
 <body>
@@ -21,10 +21,10 @@
                 <a href="/#about">обо мне</a>
                 <a href="/#portfolio">портфолио</a>
                 <a href="/#cases">кейсы</a>
-                <a href="/#prices">цены</a>
+                <a href="/#work">сотрудничество</a>
             </nav>
             <div class="nav-contact">
-                <a href="/#contacts">контакты</a>
+                <a href="/contact">связаться</a>
             </div>
         </div>
     </header>
