@@ -978,3 +978,192 @@ em {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--muted-2);
 }
+
+/* ─── Error pages (4xx) ─── */
+
+.error-page {
+    padding: 4rem 1.5rem 5rem;
+}
+
+.error-page .error-code {
+    font-size: 5.5rem;
+    font-weight: 700;
+    color: var(--danger);
+    letter-spacing: -3px;
+    line-height: 1;
+    margin-bottom: 1.25rem;
+    cursor: default;
+    user-select: none;
+    transition: text-shadow 0.2s;
+}
+
+.error-page .error-code::before {
+    content: '> ';
+    color: var(--muted);
+    font-weight: 400;
+}
+
+.error-page .error-code:hover {
+    animation: glitch 0.4s steps(1) forwards;
+}
+
+.error-page .error-code.is-warn {
+    color: var(--warn);
+}
+
+.error-page .error-heading {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+}
+
+.error-page .error-text {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    max-width: 560px;
+    line-height: 1.85;
+}
+
+.error-page .error-back {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.error-page .error-back:hover {
+    text-decoration: underline;
+}
+
+/* curl-style HTTP response on error page */
+.error-curl {
+    border: 1px solid var(--border);
+    background: transparent;
+    padding: 1.1rem 1.4rem;
+    font-size: 0.825rem;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    max-width: 620px;
+}
+
+.error-curl::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--danger), transparent 60%);
+    opacity: 0.6;
+}
+
+.error-curl.is-warn::before {
+    background: linear-gradient(90deg, var(--warn), transparent 60%);
+}
+
+.error-curl-prompt {
+    color: var(--accent);
+    margin-bottom: 0.7rem;
+    word-break: break-all;
+}
+
+.error-curl-prompt::before {
+    content: '$ ';
+    color: var(--muted);
+}
+
+.error-curl-out {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+    line-height: 1.6;
+}
+
+.error-curl-out .ec-status {
+    color: var(--danger);
+}
+
+.error-curl-out.is-warn .ec-status {
+    color: var(--warn);
+}
+
+.error-curl-out .ec-key {
+    color: var(--muted);
+    display: inline-block;
+    min-width: 110px;
+}
+
+.error-curl-out .ec-val {
+    color: var(--text);
+}
+
+.error-curl-out .ec-val em {
+    color: var(--accent-2);
+    font-style: normal;
+}
+
+/* Action row */
+.error-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1rem;
+}
+
+.error-actions .btn-cli {
+    font-size: 0.78rem;
+    padding: 0.35rem 0.8rem;
+}
+
+/* Helpful links list */
+.error-links {
+    margin-top: 2rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+    max-width: 560px;
+}
+
+.error-links-title {
+    color: var(--muted);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+}
+
+.error-links ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.error-links li::before {
+    content: '─ ';
+    color: var(--muted-2);
+}
+
+.error-links a {
+    color: var(--accent-2);
+    font-size: 0.85rem;
+}
+
+.error-links a:hover {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+/* Dev-mode marker (visible only on /__dev/errors/* preview) */
+.error-dev-marker {
+    border: 1px dashed var(--warn);
+    color: var(--warn);
+    padding: 0.4rem 0.75rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+}
