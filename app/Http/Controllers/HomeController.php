@@ -25,17 +25,26 @@ class HomeController extends Controller
     public function json(): Response
     {
         $data = [
-            'name'     => 'Тимур Турдыев',
-            'role'     => 'Backend / Full-stack разработчик',
-            'location' => 'Москва, Россия',
-            'since'    => 2014,
-            'stack'    => ['Laravel', 'Go', 'Vue', 'PostgreSQL', 'Docker'],
-            'contact'  => [
+            'name'       => 'Тимур Турдыев',
+            'role'       => 'Backend / Full-stack разработчик',
+            'location'   => 'Москва, Россия',
+            'since'      => 2014,
+            'before_dev' => [
+                'ecommerce' => 'свой интернет-магазин',
+                'seo'       => 'техническая оптимизация, скорость, индексация, аналитика воронок',
+            ],
+            'stack'      => ['Laravel', 'Go', 'Vue', 'PostgreSQL', 'Docker'],
+            'building'   => [
+                'name' => 'Mercurio Platform',
+                'desc' => 'собственная admin-платформа для интернет-магазинов',
+                'url'  => 'https://github.com/mercurioplatform',
+            ],
+            'contact'    => [
                 'telegram' => 'https://t.me/borodatimur',
                 'email'    => 'borodatimur@gmail.com',
                 'github'   => 'https://github.com/TimurTurdyev',
             ],
-            'endpoints' => [
+            'endpoints'  => [
                 'curl timcode.ru'      => 'Эта страница (terminal view)',
                 'curl timcode.ru/json' => 'Данные в JSON',
             ],
@@ -92,9 +101,10 @@ class HomeController extends Controller
         $out .= $line();
         $out .= $line('  ' . $b . 'Тимур Турдыев' . $w . ' — Backend / Full-stack разработчик');
         $out .= $line();
-        $out .= $line('  Пишу серверный код с 2014-го. Всё самостоятельно:');
-        $out .= $line('  по документации, чужому коду и собственным ошибкам.');
-        $out .= $line('  Сейчас — Waviot (IoT, NB-Fi) и проекты по рекомендации.');
+        $out .= $line('  Пишу серверный код с 2014-го. До этого — свой магазин, потом SEO:');
+        $out .= $line('  в разработку пришёл, уже понимая, где бизнес теряет деньги.');
+        $out .= $line('  Сейчас — Waviot (IoT, NB-Fi) и собственная admin-платформа');
+        $out .= $line('  Mercurio для интернет-магазинов (Laravel + Blade).');
         $out .= $line();
         $out .= $line($gr . '  name       ' . $w . 'Тимур Турдыев');
         $out .= $line($gr . '  role       ' . $w . 'Backend / Full-stack разработчик');
@@ -131,21 +141,34 @@ class HomeController extends Controller
     private function stack(): array
     {
         return [
-            ['layer' => 'Личный кабинет',         'tech' => 'TypeScript · Vue · Vite · Tailwind', 'why' => 'Свежий проект — можно позволить современный SPA'],
-            ['layer' => 'Биллинг / лицензии',     'tech' => 'Laravel (PHP)',                       'why' => 'Экосистема, скорость разработки, проверено временем'],
+            ['layer' => 'Личный кабинет',          'tech' => 'TypeScript · Vue · Vite · Tailwind', 'why' => 'Свежий проект — можно позволить современный SPA'],
+            ['layer' => 'Биллинг / лицензии',      'tech' => 'Laravel (PHP)',                      'why' => 'Экосистема, скорость разработки, проверено временем'],
             ['layer' => 'Лицензирование (legacy)', 'tech' => 'Yii2 · Codeception · RBAC',          'why' => 'Работает стабильно, переписывать без причины дорого'],
             ['layer' => 'Авторизация highload',    'tech' => 'Go',                                 'why' => 'Низкая латентность, бинарник, PHP здесь избыточен'],
-            ['layer' => 'Очереди / шина',          'tech' => 'RabbitMQ · AMQP',                   'why' => 'Развязка сервисов: отказ одного не роняет остальных'],
+            ['layer' => 'Очереди / шина',          'tech' => 'RabbitMQ · AMQP',                    'why' => 'Развязка сервисов: отказ одного не роняет остальных'],
             ['layer' => 'Телефония / callbacks',   'tech' => 'Python',                             'why' => 'Хорошие библиотеки под конкретные задачи'],
             ['layer' => 'Поиск по каталогам',      'tech' => 'SphinxSearch · Meilisearch',         'why' => 'Полнотекст с предсказуемой скоростью'],
             ['layer' => 'Desktop-утилиты',         'tech' => 'Go · Wails',                         'why' => 'Кроссплатформенный бинарник без Electron-веса'],
             ['layer' => 'Программатор устройств',  'tech' => 'Qt · C++ · OpenSSL',                 'why' => 'Специфичная железная обвязка, где Wails не подходит'],
+            ['layer' => 'Mercurio (свой проект)',  'tech' => 'Laravel · Blade · Bootstrap 5 · jQuery', 'why' => 'Серверный рендер с точечным AJAX — как у Hotwire, HTMX, Livewire; новый раздел админки = один класс'],
         ];
     }
 
     private function portfolio(): array
     {
         return [
+            [
+                'name'  => 'Mercurio Platform',
+                'desc'  => 'Собственная admin-платформа для интернет-магазинов на Laravel + Blade + Bootstrap 5 + jQuery. Серверный рендер с точечным AJAX — та же идея, что у Hotwire, HTMX и Livewire. 10 модулей: каталог, продажи, CRM, склад, маркетинг, контент, аналитика, сервис, настройки, команда.',
+                'stack' => ['Laravel', 'Blade', 'Bootstrap 5', 'jQuery', 'PHP 8.3'],
+                'url'   => 'https://github.com/mercurioplatform',
+            ],
+            [
+                'name'  => 'mercurioplatform/tables',
+                'desc'  => 'Open-source list/table engine для Laravel-админок: декларативный Resource-класс → admin-страница (поиск, сортировка, фильтры, saved views, bulk/row actions, экспорт, audit log) одной строкой роута. Выделено из Mercurio в отдельный пакет.',
+                'stack' => ['PHP', 'Laravel', 'Bootstrap 5', 'jQuery'],
+                'url'   => 'https://github.com/mercurioplatform/tables',
+            ],
             [
                 'name'  => 'IoT-платформа для производства',
                 'desc'  => 'Сбор телеметрии с промышленных датчиков через MQTT, хранение временных рядов в InfluxDB, Vue-дашборд с алертингом в Telegram.',
