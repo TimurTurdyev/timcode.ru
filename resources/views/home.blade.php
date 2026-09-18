@@ -27,7 +27,21 @@
                 </div>
             </div>
             <div class="hero-avatar-wrap">
-                <img class="hero-avatar" src="/avatar.svg" alt="Тимур Турдыев" width="150" height="150">
+                <figure class="avatar-frame">
+                    <div class="avatar-shot">
+                        <picture>
+                            <source type="image/webp" srcset="/avatar-320.webp 320w, /avatar.webp 640w" sizes="160px">
+                            <img class="hero-avatar"
+                                 src="/avatar-320.jpg"
+                                 srcset="/avatar-320.jpg 320w, /avatar.jpg 640w"
+                                 sizes="160px"
+                                 alt="Тимур Турдыев"
+                                 width="160" height="160"
+                                 decoding="async">
+                        </picture>
+                    </div>
+                    <figcaption class="avatar-caption">~/timur.jpg</figcaption>
+                </figure>
             </div>
         </div>
 

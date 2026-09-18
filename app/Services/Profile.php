@@ -300,7 +300,7 @@ class Profile
             'jobTitle'      => self::ROLE,
             'description'   => self::summary(),
             'url'           => self::SITE,
-            'image'         => self::SITE . '/avatar.svg',
+            'image'         => self::SITE . '/avatar.jpg',
             'email'         => 'mailto:' . self::EMAIL,
             'address'       => [
                 '@type'           => 'PostalAddress',
