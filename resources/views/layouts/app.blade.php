@@ -9,7 +9,7 @@
     <meta property="og:description" content="@yield('description', 'Разработчик backend и full-stack приложений.')">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="{{ url('/avatar.jpg') }}">
+    <meta property="og:image" content="@yield('og-image', url('/avatar.jpg'))">
     <meta name="twitter:card" content="summary">
     <link rel="canonical" href="{{ url()->current() }}">
 

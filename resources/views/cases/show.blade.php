@@ -2,6 +2,7 @@
 
 @section('title', ($meta['title'] ?? 'Кейс') . ' — Тимур Турдыев')
 @section('description', $meta['summary'] ?? '')
+@section('og-image', url($meta['cover'] ?? '/avatar.jpg'))
 
 @section('head')
 <script type="application/ld+json">{!! json_encode(\App\Services\Profile::caseJsonLd($meta, $slug), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>

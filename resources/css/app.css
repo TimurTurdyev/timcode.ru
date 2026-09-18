@@ -875,6 +875,130 @@ em {
     max-width: 680px;
 }
 
+/* ─── Кадры внутри кейса ─── */
+
+.case-figure {
+    margin: 2rem 0;
+}
+
+/* Широкий кадр симметрично выходит за колонку текста. */
+.case-figure.is-wide {
+    --shot-w: min(860px, calc(100vw - 3rem));
+    width: var(--shot-w);
+    margin-left: calc((100% - var(--shot-w)) / 2);
+    max-width: none;
+}
+
+@media (max-width: 900px) {
+    .case-figure.is-wide {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+.case-shot {
+    position: relative;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    overflow: hidden;
+    cursor: zoom-in;
+    transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+
+.case-shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: saturate(0.75) brightness(0.88) contrast(1.02);
+    transition: filter 0.35s var(--ease);
+}
+
+/* Развёртка строк роднит снимок с остальной страницей. */
+.case-shot::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.18) 0 1px,
+        transparent 1px 3px
+    );
+    opacity: 0.5;
+    transition: opacity 0.35s var(--ease);
+    pointer-events: none;
+}
+
+.case-shot:hover {
+    border-color: var(--accent-dim);
+    box-shadow: 0 0 16px var(--accent-glow);
+}
+
+.case-shot:hover img { filter: none; }
+.case-shot:hover::after { opacity: 0.15; }
+
+.case-figure figcaption {
+    margin-top: 0.6rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.case-figure figcaption::before {
+    content: '// ';
+    color: var(--muted-2);
+}
+
+/* ─── Просмотр кадра во весь экран ─── */
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 1.5rem;
+    background: rgba(0, 0, 0, 0.92);
+    opacity: 0;
+    transition: opacity 0.25s var(--ease);
+    cursor: zoom-out;
+}
+
+.lightbox.is-open { opacity: 1; }
+
+.lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    border: 1px solid var(--border);
+    object-fit: contain;
+}
+
+.lightbox-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 1rem;
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--muted);
+    padding: 0 1.5rem;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.25rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+    background: none;
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+}
+
+.lightbox-close:hover { color: var(--accent); }
+
 .article h2 {
     font-size: 1rem;
     color: var(--accent);
@@ -1075,13 +1199,35 @@ em {
         font-size: 14px;
     }
 
+    /* Пунктов больше, чем влезает в узкий экран: меню листается вбок,
+       страница по горизонтали стоит на месте. */
+    .site-nav .container {
+        overflow: hidden;
+    }
+
+    .nav-links {
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .nav-links::-webkit-scrollbar {
+        display: none;
+    }
+
     .nav-links a {
         padding: 0 0.4rem;
         font-size: 0.72rem;
+        white-space: nowrap;
+    }
+
+    .nav-contact {
+        flex-shrink: 0;
     }
 
     .nav-contact a {
         font-size: 0.72rem;
+        white-space: nowrap;
     }
 
     .hero {
