@@ -3,12 +3,18 @@
 use App\Http\Controllers\CaseController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MachineController;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/json', [HomeController::class, 'json']);
+
+// Машиночитаемые форматы: для агентов, парсеров резюме и LLM.
+Route::get('/llms.txt', [MachineController::class, 'llms']);
+Route::get('/llms-full.txt', [MachineController::class, 'llmsFull']);
+Route::get('/resume.json', [MachineController::class, 'resume']);
 Route::get('/cases/{slug}', [CaseController::class, 'show'])->where('slug', '[a-z0-9\-]+');
 
 Route::get('/contact', [ContactController::class, 'show']);

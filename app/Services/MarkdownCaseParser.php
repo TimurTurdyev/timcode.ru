@@ -38,7 +38,11 @@ class MarkdownCaseParser
             'allow_unsafe_links' => false,
         ]);
 
-        return ['meta' => $meta, 'html' => $converter->convert($body)->getContent()];
+        return [
+            'meta' => $meta,
+            'body' => $body,
+            'html' => $converter->convert($body)->getContent(),
+        ];
     }
 
     private function parseLines(string $block): array

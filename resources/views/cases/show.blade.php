@@ -3,6 +3,10 @@
 @section('title', ($meta['title'] ?? 'Кейс') . ' — Тимур Турдыев')
 @section('description', $meta['summary'] ?? '')
 
+@section('head')
+<script type="application/ld+json">{!! json_encode(\App\Services\Profile::caseJsonLd($meta, $slug), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>
+@endsection
+
 @section('content')
 <div class="container case-page-container">
 
