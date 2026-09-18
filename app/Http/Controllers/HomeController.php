@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\MarkdownCaseParser;
+use App\Services\Profile;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -15,11 +14,12 @@ class HomeController extends Controller
             return $this->curlResponse();
         }
 
-        $cases     = $this->loadCases();
-        $portfolio = $this->portfolio();
-        $stack     = $this->stack();
+        $cases     = Profile::cases();
+        $portfolio = Profile::portfolio();
+        $packages  = Profile::packages();
+        $stack     = Profile::stack();
 
-        return view('home', compact('cases', 'portfolio', 'stack'));
+        return view('home', compact('cases', 'portfolio', 'packages', 'stack'));
     }
 
     public function json(): Response
@@ -36,17 +36,26 @@ class HomeController extends Controller
             'stack'      => ['Laravel', 'Go', 'Vue', 'PostgreSQL', 'Docker'],
             'building'   => [
                 'name' => 'Mercurio Platform',
-                'desc' => 'собственная admin-платформа для интернет-магазинов',
+                'desc' => 'собственная платформа для интернет-магазинов: админка, CMS и витрина',
                 'url'  => 'https://github.com/mercurioplatform',
             ],
+            'open_source' => array_map(static fn (array $p) => [
+                'name'     => $p['name'],
+                'desc'     => $p['short'],
+                'registry' => $p['registry'],
+                'url'      => $p['url'],
+            ], Profile::packages()),
             'contact'    => [
                 'telegram' => 'https://t.me/borodatimur',
                 'email'    => 'borodatimur@gmail.com',
                 'github'   => 'https://github.com/TimurTurdyev',
             ],
             'endpoints'  => [
-                'curl timcode.ru'      => 'Эта страница (terminal view)',
-                'curl timcode.ru/json' => 'Данные в JSON',
+                'curl timcode.ru'           => 'Эта страница (terminal view)',
+                'curl timcode.ru/json'      => 'Данные в JSON',
+                'curl timcode.ru/resume.json'   => 'Резюме по схеме JSON Resume v1.0.0',
+                'curl timcode.ru/llms.txt'      => 'Профиль в markdown (конвенция llmstxt.org)',
+                'curl timcode.ru/llms-full.txt' => 'То же плюс полные тексты кейсов',
             ],
         ];
 
@@ -103,8 +112,9 @@ class HomeController extends Controller
         $out .= $line();
         $out .= $line('  Пишу серверный код с 2014-го. До этого — свой магазин, потом SEO:');
         $out .= $line('  в разработку пришёл, уже понимая, где бизнес теряет деньги.');
-        $out .= $line('  Сейчас — Waviot (IoT, NB-Fi) и собственная admin-платформа');
-        $out .= $line('  Mercurio для интернет-магазинов (Laravel + Blade).');
+        $out .= $line('  Сейчас - Waviot (IoT, NB-Fi) и собственная платформа Mercurio');
+        $out .= $line('  для интернет-магазинов: админка, CMS и витрина (Laravel + Blade).');
+        $out .= $line('  Что отработало в бою и понадобилось второй раз - выношу в пакеты.');
         $out .= $line();
         $out .= $line($gr . '  name       ' . $w . 'Тимур Турдыев');
         $out .= $line($gr . '  role       ' . $w . 'Backend / Full-stack разработчик');
@@ -113,15 +123,24 @@ class HomeController extends Controller
         $out .= $line($gr . '  languages  ' . $w . 'PHP (8+) · JavaScript / TypeScript · Go · Python · Java · Bash');
         $out .= $line($gr . '  backend    ' . $w . 'Laravel · Yii2 · Laminas · OpenCart · Go · FastAPI · aiohttp');
         $out .= $line($gr . '  frontend   ' . $w . 'Vue · Alpine.js · Tailwind · Bootstrap · Blade · jQuery · Vite · Wails');
-        $out .= $line($gr . '  db         ' . $w . 'MySQL · PostgreSQL · MongoDB · Redis · SphinxSearch · Meilisearch');
+        $out .= $line($gr . '  db         ' . $w . 'MySQL · MariaDB · PostgreSQL · MongoDB · Redis · Sphinx/Manticore · Meilisearch');
         $out .= $line($gr . '  queues     ' . $w . 'RabbitMQ · AMQP');
-        $out .= $line($gr . '  infra      ' . $w . 'Docker · Linux (debian, systemd) · Nginx · Git · cron/yoyo/fabric');
+        $out .= $line($gr . '  infra      ' . $w . 'Docker · Ansible · Deployer · Linux (debian, systemd) · Nginx · Git');
         $out .= $line($gr . '  integr     ' . $w . 'Mango Office · Megaplan · Dadata · СДЭК · ВКонтакте API · OpenCart API');
         $out .= $line($gr . '  contact    ' . $g . 't.me/borodatimur' . $w);
         $out .= $line();
         $out .= $line($boxTop);
         $out .= $boxRows;
         $out .= $line($boxBottom);
+        $out .= $line();
+        $out .= $line($sep('Open-source'));
+        $out .= $line();
+        $pkgCol = 32;
+        foreach (Profile::packages() as $pkg) {
+            $pad = str_repeat(' ', max(1, $pkgCol - mb_strlen($pkg['name'])));
+            $out .= $line('  ' . $g . $pkg['name'] . $w . $pad . $pkg['short']);
+            $out .= $line('  ' . $gr . str_repeat(' ', $pkgCol) . $pkg['registry'] . ' · ' . $pkg['require'] . $w);
+        }
         $out .= $line();
         $out .= $line($sep('Контакты'));
         $out .= $line();
@@ -131,118 +150,13 @@ class HomeController extends Controller
         $out .= $line();
         $out .= $line($sep('Команды'));
         $out .= $line();
-        $out .= $line('  ' . $g . '$ curl' . $w . ' timcode.ru        ' . $gr . 'Эта страница' . $w);
-        $out .= $line('  ' . $g . '$ curl' . $w . ' timcode.ru/json   ' . $gr . 'Данные в JSON' . $w);
+        $out .= $line('  ' . $g . '$ curl' . $w . ' timcode.ru               ' . $gr . 'Эта страница' . $w);
+        $out .= $line('  ' . $g . '$ curl' . $w . ' timcode.ru/json          ' . $gr . 'Данные в JSON' . $w);
+        $out .= $line('  ' . $g . '$ curl' . $w . ' timcode.ru/resume.json   ' . $gr . 'Резюме (JSON Resume v1.0.0)' . $w);
+        $out .= $line('  ' . $g . '$ curl' . $w . ' timcode.ru/llms.txt      ' . $gr . 'Профиль в markdown для агентов' . $w);
+        $out .= $line('  ' . $g . '$ curl' . $w . ' timcode.ru/llms-full.txt ' . $gr . 'То же плюс полные тексты кейсов' . $w);
         $out .= $line();
 
         return response($out, 200, ['Content-Type' => 'text/plain; charset=UTF-8']);
-    }
-
-    private function stack(): array
-    {
-        return [
-            ['layer' => 'Личный кабинет',          'tech' => 'TypeScript · Vue · Vite · Tailwind', 'why' => 'Свежий проект — можно позволить современный SPA'],
-            ['layer' => 'Биллинг / лицензии',      'tech' => 'Laravel (PHP)',                      'why' => 'Экосистема, скорость разработки, проверено временем'],
-            ['layer' => 'Лицензирование (legacy)', 'tech' => 'Yii2 · Codeception · RBAC',          'why' => 'Работает стабильно, переписывать без причины дорого'],
-            ['layer' => 'Авторизация highload',    'tech' => 'Go',                                 'why' => 'Низкая латентность, бинарник, PHP здесь избыточен'],
-            ['layer' => 'Очереди / шина',          'tech' => 'RabbitMQ · AMQP',                    'why' => 'Развязка сервисов: отказ одного не роняет остальных'],
-            ['layer' => 'Телефония / callbacks',   'tech' => 'Python',                             'why' => 'Хорошие библиотеки под конкретные задачи'],
-            ['layer' => 'Поиск по каталогам',      'tech' => 'SphinxSearch · Meilisearch',         'why' => 'Полнотекст с предсказуемой скоростью'],
-            ['layer' => 'Desktop-утилиты',         'tech' => 'Go · Wails',                         'why' => 'Кроссплатформенный бинарник без Electron-веса'],
-            ['layer' => 'Программатор устройств',  'tech' => 'Qt · C++ · OpenSSL',                 'why' => 'Специфичная железная обвязка, где Wails не подходит'],
-            ['layer' => 'Mercurio (свой проект)',  'tech' => 'Laravel · Blade · Bootstrap 5 · jQuery', 'why' => 'Серверный рендер с точечным AJAX — как у Hotwire, HTMX, Livewire; новый раздел админки = один класс'],
-        ];
-    }
-
-    private function portfolio(): array
-    {
-        return [
-            [
-                'name'  => 'Mercurio Platform',
-                'desc'  => 'Собственная admin-платформа для интернет-магазинов на Laravel + Blade + Bootstrap 5 + jQuery. Серверный рендер с точечным AJAX — та же идея, что у Hotwire, HTMX и Livewire. 10 модулей: каталог, продажи, CRM, склад, маркетинг, контент, аналитика, сервис, настройки, команда.',
-                'stack' => ['Laravel', 'Blade', 'Bootstrap 5', 'jQuery', 'PHP 8.3'],
-                'url'   => 'https://github.com/mercurioplatform',
-            ],
-            [
-                'name'  => 'mercurioplatform/tables',
-                'desc'  => 'Open-source list/table engine для Laravel-админок: декларативный Resource-класс → admin-страница (поиск, сортировка, фильтры, saved views, bulk/row actions, экспорт, audit log) одной строкой роута. Выделено из Mercurio в отдельный пакет.',
-                'stack' => ['PHP', 'Laravel', 'Bootstrap 5', 'jQuery'],
-                'url'   => 'https://github.com/mercurioplatform/tables',
-            ],
-            [
-                'name'  => 'IoT-платформа для производства',
-                'desc'  => 'Сбор телеметрии с промышленных датчиков через MQTT, хранение временных рядов в InfluxDB, Vue-дашборд с алертингом в Telegram.',
-                'stack' => ['Laravel', 'MQTT', 'InfluxDB', 'Vue', 'Docker'],
-                'url'   => '',
-            ],
-            [
-                'name'  => 'CRM для логистической компании',
-                'desc'  => 'Замена Excel-таблиц: управление заявками, маршрутизация водителей, интеграция с 2GIS и 1С, WebSocket-уведомления.',
-                'stack' => ['Laravel', 'PostgreSQL', 'Vue 3', 'Redis', 'Docker'],
-                'url'   => '',
-            ],
-            [
-                'name'  => 'Портал самообслуживания',
-                'desc'  => 'Личный кабинет абонента телеком-оператора: баланс, тарифы, история платежей, онлайн-заявки.',
-                'stack' => ['Laravel', 'Vue', 'Redis', 'MySQL'],
-                'url'   => '',
-            ],
-            [
-                'name'  => 'Laravel-Mango-Office',
-                'desc'  => 'Пакет для интеграции Laravel-приложений с облачной АТС Mango Office: вебхуки, история звонков, клик-ту-колл.',
-                'stack' => ['PHP', 'Laravel'],
-                'url'   => 'https://github.com/TimurTurdyev/Laravel-Mango-Office',
-            ],
-            [
-                'name'  => 'SDK СДЭК 2.0',
-                'desc'  => 'PHP-клиент для API v2.0 службы доставки СДЭК: расчёт тарифов, создание заказов, трекинг, печать накладных.',
-                'stack' => ['PHP'],
-                'url'   => 'https://github.com/TimurTurdyev/sdk2.0',
-            ],
-            [
-                'name'  => 'Export-Import OpenCart + Vue',
-                'desc'  => 'Импорт и экспорт товаров в OpenCart через Vue-интерфейс без перезагрузки страницы — CSV и XLS форматы.',
-                'stack' => ['PHP', 'Vue', 'OpenCart'],
-                'url'   => 'https://github.com/TimurTurdyev/Export-Import-Opencart-Vue',
-            ],
-            [
-                'name'  => 'opencart-dadata',
-                'desc'  => 'Подсказки адресов и ФИО от Dadata при оформлении заказа в OpenCart. Ускоряет ввод и снижает ошибки.',
-                'stack' => ['Vue', 'PHP', 'OpenCart'],
-                'url'   => 'https://github.com/TimurTurdyev/opencart-dadata',
-            ],
-            [
-                'name'  => 'timcode.ru',
-                'desc'  => 'Этот сайт. Laravel + markdown-кейсы, терминальный дизайн, curl-режим.',
-                'stack' => ['Laravel', 'PHP 8.3', 'CSS'],
-                'url'   => 'https://github.com/TimurTurdyev',
-            ],
-        ];
-    }
-
-    private function loadCases(): array
-    {
-        return Cache::remember('cases_list', 3600, function () {
-            $cases = [];
-            $dir   = resource_path('content/cases');
-
-            if (! is_dir($dir)) {
-                return $cases;
-            }
-
-            $parser = new MarkdownCaseParser();
-
-            foreach (glob("{$dir}/*.md") as $file) {
-                $meta = $parser->parseFrontMatter(file_get_contents($file));
-                if (! empty($meta['title'])) {
-                    $meta['slug'] = basename($file, '.md');
-                    $cases[] = $meta;
-                }
-            }
-
-            usort($cases, fn ($a, $b) => ($b['year'] ?? 0) <=> ($a['year'] ?? 0));
-
-            return $cases;
-        });
     }
 }

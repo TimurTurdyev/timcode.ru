@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('head')
+<script type="application/ld+json">{!! json_encode(\App\Services\Profile::jsonLd(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>
+@endsection
+
 @section('content')
 <div class="container">
 
@@ -12,8 +16,9 @@
                     Привет, меня зовут Тимур.<br>
                     Серверный код пишу с 2014-го. До этого был свой интернет-магазин и SEO —
                     в разработку пришёл, уже понимая, где бизнес теряет деньги.
-                    Сейчас — боевые системы в Waviot (IoT, биллинг, Go-сервисы)
-                    и собственная admin-платформа Mercurio для интернет-магазинов.
+                    Сейчас - боевые системы в Waviot (IoT, биллинг, Go-сервисы),
+                    собственная платформа Mercurio для интернет-магазинов
+                    и пять open-source пакетов, выросших из неё.
                 </p>
                 <div class="social-links">
                     <a href="https://t.me/borodatimur" target="_blank" rel="noopener">Telegram</a>
@@ -36,9 +41,9 @@
                 <div><span class="co-key">languages</span> PHP (8+) · JavaScript / TypeScript · Go · Python · Java · Bash</div>
                 <div><span class="co-key">backend</span>   Laravel · Yii2 · Laminas · OpenCart · Go · FastAPI · aiohttp</div>
                 <div><span class="co-key">frontend</span>  Vue · Alpine.js · Tailwind · Bootstrap · Blade · jQuery · Vite · Wails</div>
-                <div><span class="co-key">db</span>        MySQL · PostgreSQL · MongoDB · Redis · SphinxSearch · Meilisearch</div>
+                <div><span class="co-key">db</span>        MySQL · MariaDB · PostgreSQL · MongoDB · Redis · Sphinx/Manticore · Meilisearch</div>
                 <div><span class="co-key">queues</span>    RabbitMQ · AMQP</div>
-                <div><span class="co-key">infra</span>     Docker · Linux · Nginx · Git · systemd</div>
+                <div><span class="co-key">infra</span>     Docker · Ansible · Deployer · Linux · Nginx · Git · systemd</div>
                 <div><span class="co-key">integr</span>    Mango Office · Megaplan · Dadata · СДЭК · ВКонтакте API</div>
                 <div><span class="co-key">contact</span>   <a href="https://t.me/borodatimur" target="_blank" rel="noopener">t.me/borodatimur</a></div>
             </div>
@@ -76,10 +81,17 @@
         <br>
         <p>
             Сейчас основное время — в продуктовой команде Waviot (IoT-платформа NB-Fi): TypeScript + Vue + Laravel + Go.
-            Параллельно строю <strong>Mercurio</strong> — собственную admin-платформу для интернет-магазинов
-            на Laravel + Blade + Bootstrap 5 + jQuery, серверный рендер с точечным AJAX в духе
-            Hotwire, HTMX и Livewire. Фриланс — только интересные задачи: связать системы,
+            Параллельно строю <strong>Mercurio</strong> - собственную платформу для интернет-магазинов:
+            админка, CMS и витрина на Laravel + Blade + Bootstrap 5 + jQuery, серверный рендер
+            с точечным AJAX в духе Hotwire, HTMX и Livewire. Фриланс - только интересные задачи: связать системы,
             разобраться в чужом легаси, принять инженерное решение.
+        </p>
+        <br>
+        <p>
+            Куски платформы, которые оказались полезны сами по себе, вынес в
+            <a href="#packages">open-source</a>: движок таблиц для админок, менеджер настроек
+            (сразу для Laravel и для Python - с общей таблицей), корзина и SEO-пакет.
+            Правило простое: наружу идёт то, что уже отработало в бою и понадобилось во втором проекте.
         </p>
     </section>
 
@@ -105,6 +117,27 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+    </section>
+
+    {{-- Packages --}}
+    <section id="packages" class="section">
+        <p class="section-title"><span class="st-hash">##</span> пакеты</p>
+        <p class="section-note">
+            Выношу наружу только то, что уже отработало в боевом проекте и понадобилось во втором.
+            Организация <a href="https://github.com/mercurioplatform" target="_blank" rel="noopener">mercurioplatform</a> - тоже моя.
+        </p>
+        <div class="pkg-list">
+            @foreach($packages as $pkg)
+            <div class="pkg-item">
+                <div class="pkg-head">
+                    <a class="pkg-name" href="{{ $pkg['url'] }}" target="_blank" rel="noopener">{{ $pkg['name'] }}</a>
+                    <span class="pkg-registry">{{ $pkg['registry'] }}</span>
+                </div>
+                <p class="pkg-desc">{{ $pkg['desc'] }}</p>
+                <div class="pkg-require">{{ $pkg['require'] }}</div>
+            </div>
+            @endforeach
         </div>
     </section>
 

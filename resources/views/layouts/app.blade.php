@@ -10,6 +10,12 @@
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
     <link rel="canonical" href="{{ url()->current() }}">
+
+    {{-- Машиночитаемые версии того же содержимого --}}
+    <link rel="alternate" type="application/json" href="/resume.json" title="Резюме, JSON Resume v1.0.0">
+    <link rel="alternate" type="application/json" href="/json" title="Краткая карточка в JSON">
+    <link rel="alternate" type="text/markdown" href="/llms.txt" title="Профиль в markdown (llms.txt)">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @yield('head')
 </head>
@@ -19,6 +25,7 @@
             <nav class="nav-links">
                 <a href="/#hero">timcode.ru</a>
                 <a href="/#about">обо мне</a>
+                <a href="/#packages">пакеты</a>
                 <a href="/#portfolio">портфолио</a>
                 <a href="/#cases">кейсы</a>
                 <a href="/#work">сотрудничество</a>
